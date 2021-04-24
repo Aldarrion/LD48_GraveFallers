@@ -13,6 +13,8 @@ public class CharacterController : MonoBehaviour
     public float JumpHeight;
     public float FallGravityMultiplier;
 
+    public string Prefix;
+
     private Rigidbody2D _rigidBody;
     private bool _isGrounded;
     private bool _jumpKeyWasUp = true;
@@ -52,9 +54,9 @@ public class CharacterController : MonoBehaviour
     {
         Vector3 velocity = _rigidBody.velocity;
 
-        bool isLeftKeyActive = Input.GetKey(KeyCode.A);
-        bool isRightKeyActive = Input.GetKey(KeyCode.D);
-        bool isJumpKeyActive = Input.GetKey(KeyCode.Space);
+        bool isLeftKeyActive = Input.GetAxis(Prefix + "Horizontal") < 0;
+        bool isRightKeyActive = Input.GetAxis(Prefix + "Horizontal") > 0;
+        bool isJumpKeyActive = Input.GetButton(Prefix + "Jump");
         bool directionKeyIsActive = false;
         // -----------------------
         // Horiznotal movement
