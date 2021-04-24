@@ -108,6 +108,7 @@ public class CharacterController : MonoBehaviour
             _rigidBody.gravityScale = DefaultGravityScale;
         }
 
+        velocity.y = Mathf.Max(velocity.y, -30);
         _rigidBody.velocity = velocity;
 
         // -----------------------

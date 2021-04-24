@@ -7,8 +7,14 @@ public class Projectile : MonoBehaviour
     public float Speed;
     public Vector2 Direction;
 
+    private float _timeToLive = 10.0f;
+
     private void Update()
     {
+        _timeToLive -= Time.deltaTime;
+        if (_timeToLive <= 0)
+            Disintegrate();
+
         Vector2 movement = Direction * Speed * Time.deltaTime;
         transform.position += new Vector3(movement.x, movement.y);
     }
