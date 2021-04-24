@@ -44,3 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPrefab: {fileID: 6143393470019669791, guid: ffe8f1ad79175b94083fbf9b88975353, type: 3}
+  Cameras:
+  - {fileID: 0}
+  - {fileID: 0}
+  Spawns:
+  - {fileID: 0}
+  - {fileID: 0}

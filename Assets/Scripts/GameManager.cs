@@ -5,10 +5,14 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public GameObject PlayerPrefab;
+    public Camera[] Cameras;
+    public Transform[] Spawns;
 
     public static GameManager Instance { get; private set; }
-    
+
     public List<GameObject> Players { get; private set; }
+
+    string[] _prefixes = new string[] { "", "P2_" };
 
     private void Awake()
     {
@@ -27,13 +31,32 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // TODO this will be from UI action, not from Start()
-        StartGame();
+        StartGame(2);
     }
 
-    void StartGame()
+    void StartGame(int playerCount)
     {
         Players.Clear();
-        Players.Add(Instantiate(PlayerPrefab, new Vector3(0, 6), Quaternion.identity));
-        Camera.main.GetComponent<CameraController>().PlayerToFollow = Players[0].transform;
+        for (int i = 0; i < Cameras.Length; ++i)
+        {
+            Cameras[i].gameObject.SetActive(i < playerCount);
+        }
+
+        for (int i = 0; i < playerCount; ++i)
+        {
+            Players.Add(Instantiate(PlayerPrefab, Spawns[i].position, Quaternion.identity));
+            Cameras[i].GetComponent<CameraController>().PlayerToFollow = Players[i].transform;
+            Players[i].GetComponent<CharacterController>().Prefix = _prefixes[i];
+        }
+
+        if (playerCount == 1)
+        {
+            Cameras[0].rect = new Rect(0, 0, 1, 1);
+        }
+        else if (playerCount == 2)
+        {
+            Cameras[0].rect = new Rect(0, 0, 0.5f, 1);
+            Cameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+        }
     }
 }
