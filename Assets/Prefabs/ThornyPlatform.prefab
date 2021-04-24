@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6431974057850466203}
   - component: {fileID: 6431974057850466206}
   - component: {fileID: 8860906039018243195}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: ThornyPlatform
   m_TagString: Ground
   m_Icon: {fileID: 0}
