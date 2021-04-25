@@ -16,6 +16,8 @@ public class LevelGenerator : MonoBehaviour
     public GameObject NormalPlatform;
     public GameObject SpikyPlatform;
 
+    public GameObject Shooter;
+
     private Dictionary<CharacterMovementController, Interval> intervals = new Dictionary<CharacterMovementController, Interval>();
 
     private Dictionary<int, List<GameObject>> rowObjects = new Dictionary<int, List<GameObject>>();
@@ -89,7 +91,7 @@ public class LevelGenerator : MonoBehaviour
 
             if (interval.To > currentRow - RowsBellow)
             {
-                for (int i =interval.To - 1; i > currentRow - RowsBellow; i--)
+                for (int i =interval.To - 1; i >= currentRow - RowsBellow; i--)
                 {
                     SpawnRow(i);
                     interval.To = currentRow - RowsBellow;
@@ -116,6 +118,8 @@ public class LevelGenerator : MonoBehaviour
 
     void GenerateRow(int rowId, List<GameObject> gameObjects)
     {
+        Debug.Log("Row " + rowId);
+
         System.Random random = new System.Random(rowId * 967);
 
         //if (rowId % 2 != 0)
@@ -127,16 +131,25 @@ public class LevelGenerator : MonoBehaviour
         //    Instantiate(NormalPlatform, new Vector3(RowToPosition(position+2), RowToPosition(rowId)), Quaternion.identity);
         //}
 
-        if (rowId % 2 != 0)
+        if (rowId % 2 == 0)
         {
+            int thornLimit = random.Next(0, 3);
+            int thornProbability = 10 + rowId / 100;
+
+            if ((rowId / 2) % 7 == 0)
+            {
+                thornLimit += 1;
+                thornProbability += 50;
+            }
+
             int startSkip = 0;
             int skip;
 
-            int probabilityToSpawn = Mathf.Max(random.Next(0, 20), 0) + Mathf.Max(random.Next(0, 20), 0) + Mathf.Max(random.Next(-10, 10), 0);
+            int probabilityToSpawn = Mathf.Max(random.Next(0, 10 + Mathf.Abs(rowId % 7)), 0) + Mathf.Max(random.Next(0, 10 + Mathf.Abs(rowId % 7)), 0) + Mathf.Max(random.Next(-10, 10), 0);
 
             if (random.Next(0, 100) < probabilityToSpawn)
             {
-                SpawnObject(NormalPlatform, 0, rowId, gameObjects);
+                SpawnObject(NormalOrThorn(thornProbability, ref thornLimit, random), 0, rowId, gameObjects);
                 startSkip = ROW_SKIP;
             }
 
@@ -160,7 +173,7 @@ public class LevelGenerator : MonoBehaviour
 
                 if (random.Next(0, 100) < probabilityToSpawn)
                 {
-                    SpawnObject(NormalPlatform, i * firstWay, rowId, gameObjects);
+                    SpawnObject(NormalOrThorn(thornProbability, ref thornLimit, random), i * firstWay, rowId, gameObjects);
                     skip = ROW_SKIP;
                 }
 
@@ -178,22 +191,50 @@ public class LevelGenerator : MonoBehaviour
 
                 if (random.Next(0, 100) < probabilityToSpawn)
                 {
-                    SpawnObject(NormalPlatform, i * -firstWay, rowId, gameObjects);
+                    SpawnObject(NormalOrThorn(thornProbability, ref thornLimit, random), i * -firstWay, rowId, gameObjects);
                     skip = ROW_SKIP;
                 }
 
             }
-        } 
+        }
         else
         {
             // filler rows
+
+            if ((rowId / 2) % 5 == 0)
+            {
+                if (random.Next(0, 100) < 20)
+                {
+                    int direction = random.Next() > 0 ? 1 : -1;
+                    GameObject shooter = SpawnObject(Shooter, 7 * direction, rowId, gameObjects);
+
+                    shooter.GetComponent<Shooter>().Direction = direction > 0 ? ShootDirection.Left : ShootDirection.Right;
+                }
+            }
         }
     }
 
-    void SpawnObject(GameObject prefab, int positionInRow, int rowNumber, List<GameObject> gameObjects)
+    GameObject NormalOrThorn(int probability, ref int thornLimit, System.Random random)
+    {
+        if (thornLimit <= 0)
+        {
+            return NormalPlatform;
+        }
+
+        if (random.Next(0, 100) < probability)
+        {
+            thornLimit--;
+            return SpikyPlatform;
+        }
+
+        return NormalPlatform;
+    }
+
+    GameObject SpawnObject(GameObject prefab, int positionInRow, int rowNumber, List<GameObject> gameObjects)
     {
         GameObject gameObject = Instantiate(prefab, new Vector3(RowToPosition(positionInRow), RowToPosition(rowNumber)), Quaternion.identity);
         gameObjects.Add(gameObject);
+        return gameObject;
     }
 
     void DestroyRow(int rowId)
