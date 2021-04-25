@@ -17,5 +17,7 @@ public class CharacterMovementController : MonoBehaviour
     void Update()
     {
         _movementComponent.Update();
+
+        transform.position = new Vector3(Mathf.Max(Mathf.Min(transform.position.x, 6), -6), transform.position.y, transform.position.z);
     }
 }
