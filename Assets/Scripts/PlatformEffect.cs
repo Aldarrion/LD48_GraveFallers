@@ -10,13 +10,20 @@ public enum PlatformType
 public class PlatformEffect : MonoBehaviour
 {
     public PlatformType Type;
+    public ParticleSystem Particles;
 
     private bool active_ = true;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!active_)
+        {
+            if (!Particles.isPlaying)
+            {
+                Destroy(gameObject);
+            }
             return;
+        }
 
         if (collision.collider.CompareTag("Player"))
         {
@@ -32,7 +39,8 @@ public class PlatformEffect : MonoBehaviour
             {
                 active_ = false;
                 character.TakeDamage(1);
-                GetComponent<SpriteRenderer>().color = Color.white;
+                GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+                Particles.Play();
                 break;
             }
             default:
