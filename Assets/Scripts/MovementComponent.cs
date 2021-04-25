@@ -90,7 +90,7 @@ public class MovementComponent
             foreach (Vector3 position in positions)
             {
                 // layer 3 - colliders
-                RaycastHit2D[] hits = Physics2D.RaycastAll(position, velocity, 1f, 1 << 3);
+                RaycastHit2D[] hits = Physics2D.RaycastAll(position, velocity, velocity.magnitude, 1 << 3);
 
 
                 foreach (RaycastHit2D hit in hits)
@@ -147,7 +147,7 @@ public class MovementComponent
 
         if (velocity.y < 0)
         {
-            if (Math.Abs(hit.collider.bounds.center.y + hit.collider.bounds.extents.y - position.y) > velocity.magnitude)
+            if (hit.collider.bounds.center.y + hit.collider.bounds.extents.y > position.y)
             {
                 return velocity;
             }
@@ -157,7 +157,7 @@ public class MovementComponent
             return velocity;
         }
 
-        pushback = new Vector3(0, hit.collider.bounds.center.y + hit.collider.bounds.extents.y - (position.y + velocity.y));
+        pushback = new Vector3(0, hit.collider.bounds.center.y + hit.collider.bounds.extents.y - (position.y + velocity.y) + 0.001f);
 
         DebugHelp.PointPosition = new Vector3(hit.point.x, hit.point.y);
 
