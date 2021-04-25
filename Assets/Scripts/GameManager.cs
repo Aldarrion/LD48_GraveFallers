@@ -95,6 +95,10 @@ public class GameManager : MonoBehaviour
 
         _isGameRunning = true;
         // TODO init countdown 3, 2, 1, GO!
+
+        LevelGenerator levelGenerator = FindObjectOfType<LevelGenerator>();
+
+        levelGenerator.StartGeneration(Players);
     }
 
     void UpdateTime()

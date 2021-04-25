@@ -18,7 +18,7 @@ public class LevelGenerator : MonoBehaviour
 
     public GameObject Shooter;
 
-    private Dictionary<CharacterMovementController, Interval> intervals = new Dictionary<CharacterMovementController, Interval>();
+    private Dictionary<GameObject, Interval> intervals = new Dictionary<GameObject, Interval>();
 
     private Dictionary<int, List<GameObject>> rowObjects = new Dictionary<int, List<GameObject>>();
 
@@ -46,25 +46,24 @@ public class LevelGenerator : MonoBehaviour
 
     public void Start()
     {
-        StartGeneration();
+        
     }
 
-    public void StartGeneration()
+    public void StartGeneration(IEnumerable<GameObject> players)
     {
 
 
-        foreach (CharacterMovementController player in FindObjectsOfType<CharacterMovementController>())
+        foreach (GameObject player in players)
         {
-            CharacterMovementController characterController = player.GetComponent<CharacterMovementController>();
-            if (characterController != null)
+            if (player != null)
             {
-                int currentRow = PositionToRow(characterController.transform.position.y);
+                int currentRow = PositionToRow(player.transform.position.y);
 
                 Interval interval = new Interval();
                 interval.From = currentRow + RowsAbove;
                 interval.To = currentRow - RowsBellow;
 
-                intervals.Add(characterController, interval);
+                intervals.Add(player, interval);
 
                 for (int i = interval.From; i>=interval.To; i--)
                 {
@@ -83,7 +82,7 @@ public class LevelGenerator : MonoBehaviour
             return;
         }
 
-        foreach (CharacterMovementController characterController in intervals.Keys)
+        foreach (GameObject characterController in intervals.Keys)
         {
             Interval interval = intervals[characterController];
 
@@ -118,7 +117,7 @@ public class LevelGenerator : MonoBehaviour
 
     void GenerateRow(int rowId, List<GameObject> gameObjects)
     {
-        Debug.Log("Row " + rowId);
+        //Debug.Log("Row " + rowId);
 
         System.Random random = new System.Random(rowId * 967);
 
