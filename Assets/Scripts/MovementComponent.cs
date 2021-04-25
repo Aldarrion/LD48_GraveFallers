@@ -11,6 +11,9 @@ public class MovementComponent
     private Transform _transform;
     private Collider2D _collider2D;
 
+    private readonly float DEFAULT_MAX_GRAVITY = -10;
+    private readonly float FLOATING_MAX_GRAVITY = -1;
+
     private float _speed;
     private float _stepTime = 1f / 120;
     private float _accumulatedTime;
@@ -22,7 +25,6 @@ public class MovementComponent
 
     private InputReader _inputReader;
 
-
     public MovementComponent(Transform transform, Collider2D collider2D, float speed, string playerPrefix)
     {
         _transform = transform;
@@ -30,6 +32,18 @@ public class MovementComponent
         _speed = speed;
 
         _inputReader = new InputReader(playerPrefix);
+    }
+
+    public void ToggleFloating(bool isFloating)
+    {
+        if (isFloating)
+        {
+            _maxGravity = FLOATING_MAX_GRAVITY;
+        }
+        else
+        {
+            _maxGravity = DEFAULT_MAX_GRAVITY;
+        }
     }
 
     public void Update()
