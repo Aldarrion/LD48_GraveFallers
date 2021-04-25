@@ -4,27 +4,37 @@ using UnityEngine;
 
 public class CharacterLogic : MonoBehaviour
 {
-    public int LifeCount { get; private set; }
+    private int _lifeCount;
+    public int LifeCount
+    {
+        get
+        {
+            return _lifeCount;
+        }
+        private set
+        {
+            _lifeCount = value;
+            GameManager.Instance.SetLifeCount(PlayerId, _lifeCount);
+        }
+    }
+
+    public int PlayerId { get; private set; }
 
     public void TakeDamage(int count)
     {
-        LifeCount -= 1;
+        LifeCount -= count;
         Debug.Log($"Damage taken, life count: {LifeCount}");
     }
 
     public void Heal(int count)
     {
-        LifeCount += 1;
+        LifeCount += count;
         Debug.Log($"Healed, life count: {LifeCount}");
     }
 
-    void Awake()
+    public void Init(int playerId, int lifeCount)
     {
-        LifeCount = 3;
-    }
-
-    void Update()
-    {
-        
+        PlayerId = playerId;
+        LifeCount = lifeCount;
     }
 }
