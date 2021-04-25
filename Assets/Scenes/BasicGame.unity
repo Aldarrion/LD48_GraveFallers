@@ -2379,10 +2379,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5175982385169878085, guid: 116edf164be92c14e85bf08999ea031e, type: 3}
-      propertyPath: RowsBellow
-      value: 30
-      objectReference: {fileID: 0}
     - target: {fileID: 5421086157183707843, guid: 116edf164be92c14e85bf08999ea031e, type: 3}
       propertyPath: m_Name
       value: LevelGenerator

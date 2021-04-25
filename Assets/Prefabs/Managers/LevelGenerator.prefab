@@ -50,3 +50,4 @@ MonoBehaviour:
   NormalPlatform: {fileID: 2061075261802024846, guid: 83d00db3e1c98ef4ea2f06bc96398aca, type: 3}
   SpikyPlatform: {fileID: 7559861340572100260, guid: 649480f1df4ee1546886631dea1ea20c, type: 3}
   Shooter: {fileID: 3002333591537920758, guid: 763aa6cddcaf1544495bfc8552e6be2b, type: 3}
+  Heart: {fileID: 1550371997837995578, guid: c0795486b970df04da6282f51915b709, type: 3}

@@ -18,6 +18,8 @@ public class LevelGenerator : MonoBehaviour
 
     public GameObject Shooter;
 
+    public GameObject Heart;
+
     private Dictionary<GameObject, Interval> intervals = new Dictionary<GameObject, Interval>();
 
     private Dictionary<int, List<GameObject>> rowObjects = new Dictionary<int, List<GameObject>>();
@@ -132,7 +134,7 @@ public class LevelGenerator : MonoBehaviour
 
         if (rowId % 2 == 0)
         {
-            int thornLimit = random.Next(0, 3);
+            int thornLimit = random.Next(1, 3);
             int thornProbability = 10 + rowId / 100;
 
             if ((rowId / 2) % 7 == 0)
@@ -144,7 +146,7 @@ public class LevelGenerator : MonoBehaviour
             int startSkip = 0;
             int skip;
 
-            int probabilityToSpawn = Mathf.Max(random.Next(0, 10 + Mathf.Abs(rowId % 7)), 0) + Mathf.Max(random.Next(0, 10 + Mathf.Abs(rowId % 7)), 0) + Mathf.Max(random.Next(-10, 10), 0);
+            int probabilityToSpawn = Mathf.Max(random.Next(0, 10 + Mathf.Abs(rowId % 19)), 0);
 
             if (random.Next(0, 100) < probabilityToSpawn)
             {
@@ -208,6 +210,14 @@ public class LevelGenerator : MonoBehaviour
                     GameObject shooter = SpawnObject(Shooter, 7 * direction, rowId, gameObjects);
 
                     shooter.GetComponent<Shooter>().Direction = direction > 0 ? ShootDirection.Left : ShootDirection.Right;
+                }
+            }
+
+            if ((rowId / 2) % 49 == 0)
+            {
+                if (random.Next(0, 100) < 40)
+                {
+                    SpawnObject(Heart, random.Next(-5, 5), rowId, gameObjects);
                 }
             }
         }
