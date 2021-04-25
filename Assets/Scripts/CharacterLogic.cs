@@ -13,6 +13,8 @@ public class CharacterLogic : MonoBehaviour
     public float ShakeTime = 0.3f;
     public float ShakeIntensity = 0.3f;
 
+    public GameObject HeartSpawner;
+
     private int _lifeCount;
     public int LifeCount
     {
@@ -45,6 +47,8 @@ public class CharacterLogic : MonoBehaviour
 
         BloodParticleSystem.Stop();
         BloodParticleSystem.Play();
+
+        Instantiate(HeartSpawner, transform.position, Quaternion.identity);
     }
 
     public bool Heal(int count)

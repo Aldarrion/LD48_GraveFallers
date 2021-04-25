@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // TODO this will be from UI action, not from Start()
-        StartGame(1, 60);
+        StartGame(2, 60);
     }
 
     void StartGame(int playerCount, float limitInSeconds)
