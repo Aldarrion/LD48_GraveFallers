@@ -10,8 +10,7 @@ public class Pulsing : MonoBehaviour
 
     void Update()
     {
-        //float frac = Time.time - (int)Time.time;
-        float scale = Curve.Evaluate(Time.time) * Scale;
+        float scale = Curve.Evaluate(Time.time * Speed) * Scale;
 
         transform.localScale = new Vector3(scale, scale, 1);
     }
