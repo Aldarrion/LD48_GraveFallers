@@ -154,7 +154,7 @@ public class LevelGenerator : MonoBehaviour
 
             skip = startSkip;
 
-            int firstWay = random.Next() > 0 ? 1 : -1;
+            int firstWay = random.Next(-100, 100) > 0 ? 1 : -1;
 
             for (int i = 1; i <= 6; i++)
             {
@@ -204,7 +204,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 if (random.Next(0, 100) < 20)
                 {
-                    int direction = random.Next() > 0 ? 1 : -1;
+                    int direction = random.Next(-100, 100) > 0 ? 1 : -1;
                     GameObject shooter = SpawnObject(Shooter, 7 * direction, rowId, gameObjects);
 
                     shooter.GetComponent<Shooter>().Direction = direction > 0 ? ShootDirection.Left : ShootDirection.Right;
