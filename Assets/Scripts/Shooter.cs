@@ -17,13 +17,25 @@ public class Shooter : MonoBehaviour
     public ShootDirection Direction;
     public float Speed;
     public float Cooldown;
+    public int WarmupProjectileCount = 10;
     private float _currentCooldown;
+
+    private float GetRotation()
+    {
+        return (int)Direction * 90;
+    }
 
     private void Start()
     {
         _currentCooldown = Cooldown;
-        float rotation = (int)Direction * 90;
-        transform.eulerAngles = new Vector3(0, 0, rotation);
+        transform.eulerAngles = new Vector3(0, 0, GetRotation());
+
+        float projectileOffset = Cooldown * Speed;
+        Vector3 direction = GetDirection();
+        for (int i = 0; i < WarmupProjectileCount; ++i)
+        {
+            SpawnProjectile(direction * projectileOffset * i);
+        }
     }
 
     private Vector2 GetDirection()
@@ -43,17 +55,23 @@ public class Shooter : MonoBehaviour
         }
     }
 
+    private void SpawnProjectile(Vector3 offset)
+    {
+        GameObject projectileObject = Instantiate(Projectile, ProjectileSpawnPoint.position + offset, Quaternion.identity);
+
+        var projectile = projectileObject.GetComponent<Projectile>();
+        projectile.transform.eulerAngles = new Vector3(0, 0, GetRotation());
+        projectile.Direction = GetDirection();
+        projectile.Speed = Speed;
+    }
+
     void Update()
     {
         _currentCooldown -= Time.deltaTime;
         if (_currentCooldown <= 0)
         {
             _currentCooldown = Cooldown + Random.Range(-0.1f, 0.1f) * Cooldown;
-            GameObject projectileObject = Instantiate(Projectile, ProjectileSpawnPoint.position, Quaternion.identity);
-            
-            var projectile = projectileObject.GetComponent<Projectile>();
-            projectile.Direction = GetDirection();
-            projectile.Speed = Speed;
+            SpawnProjectile(Vector3.zero);
         }
     }
 }
