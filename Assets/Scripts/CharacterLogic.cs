@@ -47,14 +47,16 @@ public class CharacterLogic : MonoBehaviour
         BloodParticleSystem.Play();
     }
 
-    public void Heal(int count)
+    public bool Heal(int count)
     {
         int newCount = Mathf.Min(MaxLives, LifeCount + count);
         if (newCount == LifeCount)
-            return;
+            return false;
 
         LifeCount = newCount;
         // TODO healing effects
+
+        return true;
     }
 
     public void Init(int playerId, int lifeCount)

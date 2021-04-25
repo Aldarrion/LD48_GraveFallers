@@ -11,26 +11,27 @@ public class Pickup : MonoBehaviour
 {
     public PickupType Type;
 
-    private void Apply(CharacterLogic character)
+    private bool Apply(CharacterLogic character)
     {
         switch (Type)
         {
             case PickupType.Heart:
-                character.Heal(1);
-                break;
+                return character.Heal(1);
             default:
                 Debug.Assert(false);
                 break;
         }
-
-        Destroy(gameObject);
+        return true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            Apply(other.GetComponent<CharacterLogic>());
+            if (Apply(other.GetComponent<CharacterLogic>()))
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
