@@ -47,6 +47,8 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         MovementComponent.Update();
+
+        transform.position = new Vector3(Mathf.Max(Mathf.Min(transform.position.x, 6), -6), transform.position.y, transform.position.z);
     }
 
 
