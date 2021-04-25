@@ -128,6 +128,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Projectile: {fileID: 1498442026763861587, guid: a0ee50bf1d23b00458877272fda156db, type: 3}
   ProjectileSpawnPoint: {fileID: 3002333591459970531}
-  Direction: 1
+  Direction: 0
   Speed: 5
   Cooldown: 1

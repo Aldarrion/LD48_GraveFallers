@@ -7,7 +7,6 @@ public class MovementComponent
 {
     private Transform _transform;
     private Collider2D _collider2D;
-    private Func<float> _calculateGroundHeight;
     private float _speed;
 
     private float _stepTime = 1f / 120;
@@ -23,8 +22,6 @@ public class MovementComponent
     private float _gravityPull = 1f / 18;
     private float _maxGravity = -10;
 
-    private float _lineThickness = 0.00001f;
-
     //private ColliderManager _colliderManager;
 
 
@@ -32,15 +29,14 @@ public class MovementComponent
     private InputReader _inputReader;
 
 
-    public MovementComponent(Transform transform, Collider2D collider2D, Func<float> calculateGroundHeight, float speed/*, ColliderManager colliderManager*/)
+    public MovementComponent(Transform transform, Collider2D collider2D, float speed/*, ColliderManager colliderManager*/, string playerPrefix)
     {
         _transform = transform;
         _collider2D = collider2D;
-        _calculateGroundHeight = calculateGroundHeight;
         _speed = speed;
         //_colliderManager = colliderManager;
 
-        _inputReader = new InputReader("");
+        _inputReader = new InputReader(playerPrefix);
     }
 
     public void Update()
@@ -72,7 +68,7 @@ public class MovementComponent
         velocity.y += _gravityForce;
         velocity *= _speed * _stepTime;
 
-        Vector3 totalMovement = new Vector3();
+        //Vector3 totalMovement = new Vector3();
 
         //while (_accumulatedTime >= _stepTime)
         //{
@@ -172,7 +168,7 @@ public class MovementComponent
         {
             _gravityForce = 0;
             _isOnGround = 5;
-            Debug.Log("Ground");
+            //Debug.Log("Ground");
         }
 
         return finalVelocity;

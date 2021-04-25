@@ -4,9 +4,9 @@ using UnityEngine;
 
 public enum ShootDirection
 {
-    Left,
     Right,
     Up,
+    Left,
     Down,
 }
 
@@ -22,6 +22,8 @@ public class Shooter : MonoBehaviour
     private void Start()
     {
         _currentCooldown = Cooldown;
+        float rotation = (int)Direction * 90;
+        transform.eulerAngles = new Vector3(0, 0, rotation);
     }
 
     private Vector2 GetDirection()
@@ -46,7 +48,7 @@ public class Shooter : MonoBehaviour
         _currentCooldown -= Time.deltaTime;
         if (_currentCooldown <= 0)
         {
-            _currentCooldown = Cooldown;
+            _currentCooldown = Cooldown + Random.Range(-0.1f, 0.1f) * Cooldown;
             GameObject projectileObject = Instantiate(Projectile, ProjectileSpawnPoint.position, Quaternion.identity);
             
             var projectile = projectileObject.GetComponent<Projectile>();

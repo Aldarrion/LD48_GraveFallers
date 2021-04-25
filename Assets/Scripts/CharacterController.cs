@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
+    public float Speed = 5;
+
     public float GroundFriction;
     public float AirFriction;
     public float MovementSpeed;
@@ -18,6 +20,8 @@ public class CharacterController : MonoBehaviour
     private Rigidbody2D _rigidBody;
     private bool _isGrounded;
     private bool _jumpKeyWasUp = true;
+
+    private MovementComponent _movementComponent;
 
     private float DefaultGravityScale => (2 * GetJumpHeight() / Mathf.Pow(GetJumpTime(), 2)) / 9.89f;
     //public float DefaultGravityScale = 1.2232f;
@@ -37,17 +41,18 @@ public class CharacterController : MonoBehaviour
     void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
+        _movementComponent = new MovementComponent(transform, GetComponent<Collider2D>(), Speed /*FindObjectOfType<ColliderManager>()*/, Prefix);
     }
 
     void Update()
     {
-
+        _movementComponent.Update();
     }
 
 
     void FixedUpdate()
     {
-        Move();
+        //Move();
     }
 
     public void Move()

@@ -11,16 +11,11 @@ public class CharacterMovementController : MonoBehaviour
 
     void Start()
     {
-        _movementComponent = new MovementComponent(transform, GetComponent<Collider2D>(), GetGroundHeight, Speed /*FindObjectOfType<ColliderManager>()*/);
+        _movementComponent = new MovementComponent(transform, GetComponent<Collider2D>(), Speed /*FindObjectOfType<ColliderManager>()*/, "");
     }
 
     void Update()
     {
         _movementComponent.Update();
-    }
-
-    public float GetGroundHeight()
-    {
-        return 10;
     }
 }

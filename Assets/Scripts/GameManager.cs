@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject PlayerPrefab;
     public Camera[] Cameras;
     public Transform[] Spawns;
+    public Image SplitImage;
 
     public static GameManager Instance { get; private set; }
 
@@ -31,7 +33,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // TODO this will be from UI action, not from Start()
-        StartGame(2);
+        StartGame(1);
     }
 
     void StartGame(int playerCount)
@@ -52,11 +54,13 @@ public class GameManager : MonoBehaviour
         if (playerCount == 1)
         {
             Cameras[0].rect = new Rect(0, 0, 1, 1);
+            SplitImage.gameObject.SetActive(false);
         }
         else if (playerCount == 2)
         {
             Cameras[0].rect = new Rect(0, 0, 0.5f, 1);
             Cameras[1].rect = new Rect(0.5f, 0, 0.5f, 1);
+            SplitImage.gameObject.SetActive(true);
         }
     }
 }
