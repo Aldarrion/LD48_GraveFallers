@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CharacterLogic : MonoBehaviour
 {
+    public int MaxLives;
     public ParticleSystem BloodParticleSystem;
 
     public float ScreenShakeVelocityMin = -0.3f;
@@ -21,7 +22,7 @@ public class CharacterLogic : MonoBehaviour
         }
         private set
         {
-            _lifeCount = value;
+            _lifeCount = Mathf.Max(0, value);
             GameManager.Instance.SetLifeCount(PlayerId, _lifeCount);
         }
     }
@@ -31,20 +32,29 @@ public class CharacterLogic : MonoBehaviour
     public void TakeDamage(int count)
     {
         LifeCount -= count;
-        
+        if (LifeCount <= 0)
+        {
+            // TODO die
+        }
+
         var cameraController = GameManager.Instance.Cameras[PlayerId].GetComponent<CameraController>();
         if (cameraController)
         {
             cameraController.Shake(0.15f, 0.15f);
         }
 
-        //BloodParticleSystem.Stop();
+        BloodParticleSystem.Stop();
         BloodParticleSystem.Play();
     }
 
     public void Heal(int count)
     {
-        LifeCount += count;
+        int newCount = Mathf.Min(MaxLives, LifeCount + count);
+        if (newCount == LifeCount)
+            return;
+
+        LifeCount = newCount;
+        // TODO healing effects
     }
 
     public void Init(int playerId, int lifeCount)
