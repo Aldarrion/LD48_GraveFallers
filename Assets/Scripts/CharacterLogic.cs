@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CharacterLogic : MonoBehaviour
 {
+    public ParticleSystem BloodParticleSystem;
+
     public float ScreenShakeVelocityMin = -0.3f;
     public float ScreenShakeVelocityMax = -0.6f;
 
@@ -33,8 +35,11 @@ public class CharacterLogic : MonoBehaviour
         var cameraController = GameManager.Instance.Cameras[PlayerId].GetComponent<CameraController>();
         if (cameraController)
         {
-            cameraController.Shake(0.2f, 0.3f);
+            cameraController.Shake(0.15f, 0.15f);
         }
+
+        //BloodParticleSystem.Stop();
+        BloodParticleSystem.Play();
     }
 
     public void Heal(int count)
