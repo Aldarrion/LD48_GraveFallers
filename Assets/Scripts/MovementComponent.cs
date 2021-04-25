@@ -5,36 +5,29 @@ using UnityEngine;
 
 public class MovementComponent
 {
+    public delegate void OnLandedCallback(Vector2 velocity);
+    public event OnLandedCallback OnLanded;
+
     private Transform _transform;
     private Collider2D _collider2D;
+
     private float _speed;
-
     private float _stepTime = 1f / 120;
-
     private float _accumulatedTime;
-    private HashSet<KeyCode> _keysPressed = new HashSet<KeyCode>();
-
-    private int _isOnGround = 0;
-
     private float _gravityForce = 0;
-
     private float _jumpForce = 3;
     private float _gravityPull = 1f / 18;
     private float _maxGravity = -10;
-
-    //private ColliderManager _colliderManager;
-
-
+    private int _isOnGround = 0;
 
     private InputReader _inputReader;
 
 
-    public MovementComponent(Transform transform, Collider2D collider2D, float speed/*, ColliderManager colliderManager*/, string playerPrefix)
+    public MovementComponent(Transform transform, Collider2D collider2D, float speed, string playerPrefix)
     {
         _transform = transform;
         _collider2D = collider2D;
         _speed = speed;
-        //_colliderManager = colliderManager;
 
         _inputReader = new InputReader(playerPrefix);
     }
@@ -166,6 +159,10 @@ public class MovementComponent
 
         if (finalVelocity.y > velocity.y && velocity.y < 0)
         {
+            if (_isOnGround <= 0)
+            {
+                OnLanded?.Invoke(velocity);
+            }
             _gravityForce = 0;
             _isOnGround = 5;
             //Debug.Log("Ground");

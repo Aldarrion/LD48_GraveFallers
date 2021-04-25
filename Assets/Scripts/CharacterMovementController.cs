@@ -6,12 +6,11 @@ public class CharacterMovementController : MonoBehaviour
 {
     public float Speed = 3;
 
-
     private MovementComponent _movementComponent;
 
-    void Start()
+    void Awake()
     {
-        _movementComponent = new MovementComponent(transform, GetComponent<Collider2D>(), Speed /*FindObjectOfType<ColliderManager>()*/, "");
+        _movementComponent = new MovementComponent(transform, GetComponent<Collider2D>(), Speed, "");
     }
 
     void Update()

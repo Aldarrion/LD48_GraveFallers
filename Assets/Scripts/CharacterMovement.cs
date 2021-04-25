@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterController : MonoBehaviour
+public class CharacterMovement : MonoBehaviour
 {
     public float Speed = 5;
 
@@ -14,6 +14,7 @@ public class CharacterController : MonoBehaviour
     public float JumpTime;
     public float JumpHeight;
     public float FallGravityMultiplier;
+    public MovementComponent MovementComponent { get; private set; }
 
     public string Prefix;
 
@@ -21,7 +22,6 @@ public class CharacterController : MonoBehaviour
     private bool _isGrounded;
     private bool _jumpKeyWasUp = true;
 
-    private MovementComponent _movementComponent;
 
     private float DefaultGravityScale => (2 * GetJumpHeight() / Mathf.Pow(GetJumpTime(), 2)) / 9.89f;
     //public float DefaultGravityScale = 1.2232f;
@@ -41,12 +41,12 @@ public class CharacterController : MonoBehaviour
     void Start()
     {
         _rigidBody = GetComponent<Rigidbody2D>();
-        _movementComponent = new MovementComponent(transform, GetComponent<Collider2D>(), Speed /*FindObjectOfType<ColliderManager>()*/, Prefix);
+        MovementComponent = new MovementComponent(transform, GetComponent<Collider2D>(), Speed, Prefix);
     }
 
     void Update()
     {
-        _movementComponent.Update();
+        MovementComponent.Update();
     }
 
 

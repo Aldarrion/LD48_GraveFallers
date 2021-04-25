@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // TODO this will be from UI action, not from Start()
-        StartGame(2, 60);
+        StartGame(1, 60);
     }
 
     void StartGame(int playerCount, float limitInSeconds)
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
         {
             Players.Add(Instantiate(PlayerPrefab, Spawns[i].position, Quaternion.identity));
             Cameras[i].GetComponent<CameraController>().PlayerToFollow = Players[i].transform;
-            Players[i].GetComponent<CharacterController>().Prefix = PlayerPrefixes[i];
+            Players[i].GetComponent<CharacterMovement>().Prefix = PlayerPrefixes[i];
             Players[i].GetComponent<CharacterLogic>().Init(i, StartLifeCount);
         }
 
