@@ -16,7 +16,7 @@ public class MovementComponent
     private float _accumulatedTime;
     private float _gravityForce = 0;
     private float _jumpForce = 3;
-    private float _gravityPull = 1f / 18;
+    private float _gravityPull = 1f / 20;
     private float _maxGravity = -10;
     private int _isOnGround = 0;
 
@@ -90,7 +90,7 @@ public class MovementComponent
             foreach (Vector3 position in positions)
             {
                 // layer 3 - colliders
-                RaycastHit2D[] hits = Physics2D.RaycastAll(position, velocity, velocity.magnitude, 1 << 3);
+                RaycastHit2D[] hits = Physics2D.RaycastAll(position, velocity, 1f, 1 << 3);
 
 
                 foreach (RaycastHit2D hit in hits)
@@ -113,16 +113,18 @@ public class MovementComponent
         List<Vector3> corners = new List<Vector3>();
 
 
-        if (velocity.y > 0)
-        {
-            corners.Add(_transform.position + new Vector3(_collider2D.bounds.extents.x, _collider2D.bounds.extents.y));
-            corners.Add(_transform.position + new Vector3(-_collider2D.bounds.extents.x, _collider2D.bounds.extents.y));
-        }
-        else
-        {
-            corners.Add(_transform.position + new Vector3(_collider2D.bounds.extents.x, -_collider2D.bounds.extents.y));
-            corners.Add(_transform.position + new Vector3(-_collider2D.bounds.extents.x, -_collider2D.bounds.extents.y));
-        }
+        corners.Add(_transform.position + new Vector3(_collider2D.bounds.extents.x, -_collider2D.bounds.extents.y));
+        corners.Add(_transform.position + new Vector3(-_collider2D.bounds.extents.x, -_collider2D.bounds.extents.y));
+
+        //if (velocity.y > 0)
+        //{
+        //    corners.Add(_transform.position + new Vector3(_collider2D.bounds.extents.x, _collider2D.bounds.extents.y));
+        //    corners.Add(_transform.position + new Vector3(-_collider2D.bounds.extents.x, _collider2D.bounds.extents.y));
+        //}
+        //else
+        //{
+
+        //}
 
         //corners.Add(_transform.position);
 
@@ -143,7 +145,14 @@ public class MovementComponent
         //    pushback = new Vector3(0, hit.point.x - (position.x + velocity.x) + _lineThickness);
         //}
 
-        if (position.y - (hit.collider.bounds.center.y + hit.collider.bounds.extents.y) < -float.Epsilon)
+        if (velocity.y < 0)
+        {
+            if (Math.Abs(hit.collider.bounds.center.y + hit.collider.bounds.extents.y - position.y) > velocity.magnitude)
+            {
+                return velocity;
+            }
+        } 
+        else
         {
             return velocity;
         }
@@ -153,6 +162,7 @@ public class MovementComponent
         DebugHelp.PointPosition = new Vector3(hit.point.x, hit.point.y);
 
         Vector3 finalVelocity = velocity + pushback;
+
         //Vector3 finalVelocity = new Vector3(position.x, hit.collider.bounds.center.y + hit.collider.bounds.extents.y) - position;
 
         //Debug.Log(finalVelocity);
