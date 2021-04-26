@@ -21,6 +21,8 @@ public class LevelGenerator : MonoBehaviour
 
     public GameObject Heart;
 
+    public GameObject Block;
+
     private Dictionary<GameObject, Interval> intervals = new Dictionary<GameObject, Interval>();
 
     private Dictionary<int, List<GameObject>> rowObjects = new Dictionary<int, List<GameObject>>();
@@ -178,6 +180,9 @@ public class LevelGenerator : MonoBehaviour
     void GenerateRow(int rowId, List<GameObject> gameObjects)
     {
         //Debug.Log("Row " + rowId);
+
+        SpawnObject(Block, -(GameConsts.ROW_SIZE + 1), rowId, gameObjects);
+        SpawnObject(Block, GameConsts.ROW_SIZE + 1, rowId, gameObjects);
 
         if (rowId >= 0)
         {

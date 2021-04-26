@@ -23,7 +23,7 @@ public class Projectile : MonoBehaviour
     private void Update()
     {
         _timeToLive -= Time.deltaTime;
-        if (_timeToLive <= 0)
+        if (_timeToLive <= 0 || transform.position.x < -(GameConsts.ROW_SIZE + 1) || transform.position.x > (GameConsts.ROW_SIZE + 1))
         {
             Disintegrate();
             return;

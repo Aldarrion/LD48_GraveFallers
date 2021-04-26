@@ -46,12 +46,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Items
-    uniqueID: 3147873049
-    locked: 0
   - name: Player
     uniqueID: 1309846749
     locked: 0
   - name: Projectile
     uniqueID: 4179036409
+    locked: 0
+  - name: Block
+    uniqueID: 3468829581
+    locked: 0
+  - name: Shooter
+    uniqueID: 1600716237
     locked: 0
