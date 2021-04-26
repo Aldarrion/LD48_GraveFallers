@@ -18,7 +18,7 @@ public class MovementComponent
     private float _stepTime = 1f / 120;
     private float _accumulatedTime;
     private float _gravityForce = 0;
-    private float _jumpForce = 3;
+    private float _jumpForce = 3.2f;
     private float _gravityPull = 1f / 20;
     private float _maxGravity = -10;
     private int _isOnGround = 0;
