@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.Instance.IsGameRunning)
+        if (PlayerToFollow == null)
             return;
 
         Vector3 offset = Vector3.zero;

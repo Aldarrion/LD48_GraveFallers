@@ -577,8 +577,8 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.04566667}
+  m_AnchoredPosition: {x: 0, y: 1028}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &245420585
@@ -807,10 +807,10 @@ RectTransform:
   m_Father: {fileID: 767762254}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0099487, y: -49}
-  m_SizeDelta: {x: 268.6687, y: 50.3754}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -0.0099487, y: 299}
+  m_SizeDelta: {x: 268.6687, y: 50.375397}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &337700404
 MonoBehaviour:
@@ -2157,10 +2157,10 @@ RectTransform:
   m_Father: {fileID: 767762254}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000011444, y: -334}
-  m_SizeDelta: {x: 268.6687, y: 50.3754}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -0.000011444, y: 95}
+  m_SizeDelta: {x: 268.6687, y: 50.375397}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1001208824
 MonoBehaviour:
@@ -2496,7 +2496,7 @@ GameObject:
   - component: {fileID: 1196098764}
   - component: {fileID: 1196098763}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Countdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2534,7 +2534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2543,7 +2543,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: d2fda4698950044459350a112c6ae3f7, type: 3}
-    m_FontSize: 161
+    m_FontSize: 179
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -3563,10 +3563,10 @@ RectTransform:
   m_Father: {fileID: 767762254}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0099487, y: -127}
-  m_SizeDelta: {x: 268.6687, y: 50.3754}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -0.0099487, y: 221}
+  m_SizeDelta: {x: 268.6687, y: 50.375397}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1982318380
 MonoBehaviour:
@@ -4240,6 +4240,10 @@ PrefabInstance:
       propertyPath: SplitImage
       value: 
       objectReference: {fileID: 2340750}
+    - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
+      propertyPath: CountdownText
+      value: 
+      objectReference: {fileID: 1196098763}
     - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
       propertyPath: TimeRemaining
       value: 

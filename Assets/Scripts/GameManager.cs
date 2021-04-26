@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverMessage;
     public GameObject ContinueButton;
     public GameObject Hud;
+    public Text CountdownText;
 
     //-------------------------------
 
@@ -75,6 +76,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         Players = new List<GameObject>();
+        IsGameRunning = false;
     }
 
     private void Start()
@@ -169,8 +171,7 @@ public class GameManager : MonoBehaviour
 
         _timeLimit = limitInSeconds;
 
-        IsGameRunning = true;
-        _countdownRemaining = Countdown;
+        _countdownRemaining = Countdown + 1;
 
         LevelGenerator levelGenerator = FindObjectOfType<LevelGenerator>();
 
@@ -253,14 +254,33 @@ public class GameManager : MonoBehaviour
             TogglePause(!_isPauseMenu);
         }
 
-        if (!IsGameRunning)
+        if (_countdownRemaining > 0)
         {
-            if (_countdownRemaining > 0)
+            _countdownRemaining -= Time.deltaTime;
+            CountdownText.gameObject.SetActive(true);
+
+            float frac = _countdownRemaining - (int)_countdownRemaining;
+            Color c = CountdownText.color;
+            c.a = frac;
+            CountdownText.color = c;
+
+            if (_countdownRemaining > 1)
             {
-                
+                int digit = Mathf.FloorToInt(_countdownRemaining);
+                CountdownText.text = $"{digit}";
+            }
+            else
+            {
+                CountdownText.text = "GO!";
+                IsGameRunning = true;
             }
         }
         else
+        {
+            CountdownText.gameObject.SetActive(false);
+        }
+
+        if (IsGameRunning)
         {
             UpdateDistance();
             UpdateTime();

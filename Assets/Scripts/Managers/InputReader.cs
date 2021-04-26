@@ -18,6 +18,9 @@ public class InputReader
 
     public void Update()
     {
+        if (!GameManager.Instance.IsGameRunning)
+            return;
+
         float horizontal = Input.GetAxis(_playerPrefix + "Horizontal");
 
         horizontalSum += horizontal;
