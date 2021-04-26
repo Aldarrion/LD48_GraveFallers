@@ -27,6 +27,10 @@ public class LevelGenerator : MonoBehaviour
 
     private bool _started = false;
 
+    private System.Random random = new System.Random();
+
+    private int currentSeed;
+
     private class Interval
     {
         public int From;
@@ -60,6 +64,7 @@ public class LevelGenerator : MonoBehaviour
 
     public void StartGeneration(IEnumerable<GameObject> players)
     {
+        currentSeed = random.Next(int.MinValue, int.MaxValue);
 
         foreach (GameObject player in players)
         {
@@ -180,7 +185,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
 
-        System.Random random = new System.Random(rowId * 967);
+        System.Random random = new System.Random(currentSeed * rowId * 967);
 
         //if (rowId % 2 != 0)
         //{
