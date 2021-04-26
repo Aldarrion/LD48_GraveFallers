@@ -271,5 +271,6 @@ public class MovementComponent
         _accumulatedTime = 0;
         _inputReader.Reset();
         _isOnGround = 0;
+        _gravityForce = 0;
     }
 }
