@@ -34,7 +34,7 @@ public class LevelGenerator : MonoBehaviour
 
     public Vector3 GetRespawnPosition(Vector3 playerPosition)
     {
-        return new Vector3(playerPosition.x, playerPosition.y + 18, playerPosition.z);
+        return new Vector3(playerPosition.x, playerPosition.y + 36 * 2, playerPosition.z);
     }
 
     public void Reset()

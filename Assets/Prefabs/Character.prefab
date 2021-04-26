@@ -9858,7 +9858,9 @@ MonoBehaviour:
   ScreenShakeVelocityMax: -0.6
   ShakeTime: 0.15
   ShakeIntensity: 0.15
-  RespawnSpeed: 10
+  RespawnSpeed: 20
+  InvulnerableTime: 1
+  BlinkingRate: 3
   HeartSpawner: {fileID: 4082845609781367065, guid: cbac5f1693c08a94e8a0c28a4b6cbd46, type: 3}
 --- !u!50 &7868071647379068339
 Rigidbody2D:

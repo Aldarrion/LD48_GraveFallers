@@ -17,8 +17,11 @@ public class CharacterLogic : MonoBehaviour
     public float ShakeIntensity = 0.3f;
 
     public float RespawnSpeed;
+    public float InvulnerableTime;
+    public float BlinkingRate;
 
     public GameObject HeartSpawner;
+    public bool IsInvlunerable { get; private set; }
 
     private int _lifeCount;
     
@@ -26,6 +29,9 @@ public class CharacterLogic : MonoBehaviour
     private Vector3 _respawnPos;
     private float _timeToRespawn;
     private Vector3 _respawnDir;
+
+    private float _invulnerableTime;
+    private float _invulnerableSign = 1;
 
     public int LifeCount
     {
@@ -54,8 +60,11 @@ public class CharacterLogic : MonoBehaviour
 
     public void TakeDamage(int count)
     {
-        LifeCount -= count;
-        if (LifeCount <= 0)
+        if (IsInvlunerable)
+            return;
+
+        int newLifeCount = LifeCount - count;
+        if (newLifeCount < 0)
         {
             // Start respawn
             _respawnPos = GameManager.Instance.LevelGenerator.GetRespawnPosition(transform.position);
@@ -64,17 +73,20 @@ public class CharacterLogic : MonoBehaviour
             _respawnDir = (_respawnPos - transform.position).normalized;
             ToggleRespawning(true);
         }
-        return;
-        var cameraController = GameManager.Instance.Cameras[PlayerId].GetComponent<CameraController>();
-        if (cameraController)
+        else
         {
-            cameraController.Shake(0.15f, 0.15f);
+            var cameraController = GameManager.Instance.Cameras[PlayerId].GetComponent<CameraController>();
+            if (cameraController)
+            {
+                cameraController.Shake(0.15f, 0.15f);
+            }
+
+            BloodParticleSystem.Stop();
+            BloodParticleSystem.Play();
+
+            Instantiate(HeartSpawner, transform.position, Quaternion.identity);
         }
-
-        BloodParticleSystem.Stop();
-        BloodParticleSystem.Play();
-
-        Instantiate(HeartSpawner, transform.position, Quaternion.identity);
+        LifeCount = newLifeCount;
     }
 
     public bool Heal(int count)
@@ -131,6 +143,12 @@ public class CharacterLogic : MonoBehaviour
 
     private void Update()
     {
+        //if (Input.GetKeyDown(KeyCode.E))
+        //{
+        //    _isInvlunerable = true;
+        //    _invulnerableTime = InvulnerableTime;
+        //}
+
         if (_isRespawning)
         {
             _timeToRespawn -= Time.deltaTime;
@@ -138,11 +156,39 @@ public class CharacterLogic : MonoBehaviour
             {
                 transform.position = _respawnPos;
                 ToggleRespawning(false);
-                Heal(3);
+                IsInvlunerable = true;
+                _invulnerableTime = InvulnerableTime;
             }
             else
             {
                 transform.position += _respawnDir * RespawnSpeed * Time.deltaTime;
+            }
+        }
+        else if (IsInvlunerable)
+        {
+            _invulnerableTime -= Time.deltaTime;
+            if (_invulnerableTime <= 0)
+            {
+                IsInvlunerable = false;
+                CharacterSprite.GetComponent<SpriteRenderer>().color = Color.white;
+                _invulnerableSign = 1;
+            }
+            else
+            {
+                Color c = CharacterSprite.GetComponent<SpriteRenderer>().color;
+                c.a += _invulnerableSign * BlinkingRate * Time.deltaTime;
+                if (c.a <= 0.5f)
+                {
+                    c.a = 0.5f;
+                    _invulnerableSign = 1;
+                }
+                else if (c.a >= 1)
+                {
+                    c.a = 1;
+                    _invulnerableSign = -1;
+                }
+
+                CharacterSprite.GetComponent<SpriteRenderer>().color = c;
             }
         }
     }

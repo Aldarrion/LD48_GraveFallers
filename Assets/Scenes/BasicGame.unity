@@ -1379,11 +1379,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1550371997837995576, guid: c0795486b970df04da6282f51915b709, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.8555865
+      value: -0.01
       objectReference: {fileID: 0}
     - target: {fileID: 1550371997837995576, guid: c0795486b970df04da6282f51915b709, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.29
+      value: 4.3
       objectReference: {fileID: 0}
     - target: {fileID: 1550371997837995576, guid: c0795486b970df04da6282f51915b709, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2325,11 +2325,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1323200756600761370, guid: d1886379495be4241a2aa0846c47a8b1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.4
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 1323200756600761370, guid: d1886379495be4241a2aa0846c47a8b1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -19966.4
+      value: -19827.9
       objectReference: {fileID: 0}
     - target: {fileID: 1323200756600761370, guid: d1886379495be4241a2aa0846c47a8b1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2485,6 +2485,30 @@ PrefabInstance:
       propertyPath: LifeContainers.Array.data[1]
       value: 
       objectReference: {fileID: 1888024201}
+    - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
+      propertyPath: PlayerColors.Array.data[0].b
+      value: 0.56078434
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
+      propertyPath: PlayerColors.Array.data[0].g
+      value: 0.4666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
+      propertyPath: PlayerColors.Array.data[0].r
+      value: 0.7960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
+      propertyPath: PlayerColors.Array.data[1].b
+      value: 0.7019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
+      propertyPath: PlayerColors.Array.data[1].g
+      value: 0.63529414
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
+      propertyPath: PlayerColors.Array.data[1].r
+      value: 0.4431373
+      objectReference: {fileID: 0}
     - target: {fileID: 6661202349636921901, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
       propertyPath: m_RootOrder
       value: 7
