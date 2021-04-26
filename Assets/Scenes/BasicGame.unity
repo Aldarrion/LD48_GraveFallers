@@ -320,7 +320,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 187253658}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.56, z: 0}
+  m_LocalPosition: {x: 0, y: 3.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2096,7 +2096,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 2.2526782, y: 0.22790849}
+  m_Offset: {x: 2.8301551, y: 0.22790849}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -2107,7 +2107,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.5053554, y: 0.544183}
+  m_Size: {x: 6.6603093, y: 0.544183}
   m_EdgeRadius: 0
 --- !u!4 &924662142
 Transform:
@@ -2478,7 +2478,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1177930289}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.65, y: 2.92, z: 0}
+  m_LocalPosition: {x: -3, y: 1.84, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3089,7 +3089,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 9.745459, y: 0.25763577}
+  m_Offset: {x: 8.629003, y: 0.25763577}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -3100,7 +3100,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.548045, y: 0.48472846}
+  m_Size: {x: 7.780958, y: 0.48472846}
   m_EdgeRadius: 0
 --- !u!4 &1656724118
 Transform:
@@ -3779,7 +3779,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130899126}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.03, y: 3.11, z: 0}
+  m_LocalPosition: {x: 4.8, y: 1.88, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4092,7 +4092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1323200756600761370, guid: d1886379495be4241a2aa0846c47a8b1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 12
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 1323200756600761370, guid: d1886379495be4241a2aa0846c47a8b1, type: 3}
       propertyPath: m_LocalPosition.x

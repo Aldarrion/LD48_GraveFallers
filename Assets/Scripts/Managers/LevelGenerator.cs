@@ -217,7 +217,7 @@ public class LevelGenerator : MonoBehaviour
 
             int firstWay = random.Next(-100, 100) > 0 ? 1 : -1;
 
-            for (int i = 1; i <= 6; i++)
+            for (int i = 1; i <= GameConsts.ROW_SIZE; i++)
             {
                 if (skip > 0)
                 {
@@ -241,7 +241,7 @@ public class LevelGenerator : MonoBehaviour
 
             skip = startSkip;
 
-            for (int i = 1; i <= 6; i++)
+            for (int i = 1; i <= GameConsts.ROW_SIZE; i++)
             {
                 if (skip > 0)
                 {
@@ -266,7 +266,7 @@ public class LevelGenerator : MonoBehaviour
                 if (random.Next(0, 100) < 20)
                 {
                     int direction = random.Next(-100, 100) > 0 ? 1 : -1;
-                    GameObject shooter = SpawnObject(Shooter, 7 * direction, rowId, gameObjects);
+                    GameObject shooter = SpawnObject(Shooter, (GameConsts.ROW_SIZE + 1) * direction, rowId, gameObjects);
 
                     shooter.GetComponent<Shooter>().Direction = direction > 0 ? ShootDirection.Left : ShootDirection.Right;
                 }
@@ -276,7 +276,7 @@ public class LevelGenerator : MonoBehaviour
             {
                 if (random.Next(0, 100) < 40)
                 {
-                    SpawnObject(Heart, random.Next(-5, 5), rowId, gameObjects);
+                    SpawnObject(Heart, random.Next(-(GameConsts.ROW_SIZE - 1), GameConsts.ROW_SIZE - 1), rowId, gameObjects);
                 }
             }
         }
