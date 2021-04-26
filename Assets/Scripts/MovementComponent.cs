@@ -25,6 +25,8 @@ public class MovementComponent
 
     private InputReader _inputReader;
 
+    private bool _enabled = true;
+
     public MovementComponent(Transform transform, Collider2D collider2D, float speed, string playerPrefix)
     {
         _transform = transform;
@@ -48,6 +50,12 @@ public class MovementComponent
 
     public void Update()
     {
+        if (!_enabled)
+        {
+            return;
+        }
+
+
         _inputReader.Update();
 
         _accumulatedTime += Time.deltaTime;
@@ -250,5 +258,18 @@ public class MovementComponent
         _isOnGround -= 1;
 
         _inputReader.Reset();
+    }
+
+    public void Enable()
+    {
+        _enabled = true;
+    }
+
+    public void Disable()
+    {
+        _enabled = false;
+        _accumulatedTime = 0;
+        _inputReader.Reset();
+        _isOnGround = 0;
     }
 }
