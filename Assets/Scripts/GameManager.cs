@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     public Text TimeRemaining;
     public GameObject[] LifeContainers;
     public GameObject MenuUI;
-    public Text MenuHeader;
+    public GameObject MenuHeader;
     public Text EndMessage;
     public GameObject CreditsMessage;
     public GameObject GameOverMessage;
@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
         ContinueButton.SetActive(isPaused);
 
         CreditsMessage.SetActive(true);
-        MenuHeader.gameObject.SetActive(true);
+        MenuHeader.SetActive(true);
         GameOverMessage.SetActive(false);
 
         IsGameRunning = !isPaused;
@@ -207,7 +207,7 @@ public class GameManager : MonoBehaviour
             IsGameRunning = false;
             Time.timeScale = 0.0f;
 
-            MenuHeader.gameObject.SetActive(false);
+            MenuHeader.SetActive(false);
             GameOverMessage.SetActive(true);
             CreditsMessage.SetActive(false);
             EndMessage.gameObject.SetActive(true);
