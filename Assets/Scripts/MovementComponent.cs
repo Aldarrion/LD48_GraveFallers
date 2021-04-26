@@ -23,7 +23,7 @@ public class MovementComponent
     private float _maxGravity = -10;
     private int _isOnGround = 0;
 
-    private InputReader _inputReader;
+    public InputReader InputReader { get; private set; }
 
     private bool _enabled = true;
 
@@ -33,7 +33,7 @@ public class MovementComponent
         _collider2D = collider2D;
         _speed = speed;
 
-        _inputReader = new InputReader(playerPrefix);
+        InputReader = new InputReader(playerPrefix);
     }
 
     public void ToggleFloating(bool isFloating)
@@ -56,7 +56,7 @@ public class MovementComponent
         }
 
 
-        _inputReader.Update();
+        InputReader.Update();
 
         _accumulatedTime += Time.deltaTime;
 
@@ -73,9 +73,9 @@ public class MovementComponent
         Vector3 velocity = new Vector3();
 
 
-        velocity += new Vector3(3 * _inputReader.GetHorizontal(), 0);
+        velocity += new Vector3(3 * InputReader.GetHorizontal(), 0);
 
-        if (_inputReader.IsAction(InputAction.Jump) && _isOnGround > 0)
+        if (InputReader.IsAction(InputAction.Jump) && _isOnGround > 0)
         {
             _gravityForce = _jumpForce;
         }
@@ -257,7 +257,7 @@ public class MovementComponent
 
         _isOnGround -= 1;
 
-        _inputReader.Reset();
+        InputReader.Reset();
     }
 
     public void Enable()
@@ -269,7 +269,7 @@ public class MovementComponent
     {
         _enabled = false;
         _accumulatedTime = 0;
-        _inputReader.Reset();
+        InputReader.Reset();
         _isOnGround = 0;
         _gravityForce = 0;
     }

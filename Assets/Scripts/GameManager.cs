@@ -27,6 +27,9 @@ public class GameManager : MonoBehaviour
     public GameObject MenuUI;
     public Text MenuHeader;
     public Text EndMessage;
+    public GameObject CreditsMessage;
+    public GameObject GameOverMessage;
+    public GameObject ContinueButton;
 
     //-------------------------------
 
@@ -54,6 +57,7 @@ public class GameManager : MonoBehaviour
     private float _timeLimit;
     private float _countdownRemaining;
     private List<GameObject> _itemsToDestroy = new List<GameObject>();
+    private bool _isPauseMenu;
 
     //-------------------------------
     private void Awake()
@@ -87,6 +91,12 @@ public class GameManager : MonoBehaviour
         #endif
     }
 
+    public void ContinueGame()
+    {
+        Debug.Assert(_isPauseMenu);
+        TogglePause(false);
+    }
+
     public void StartSingleplayer()
     {
         StartGame(1, SingleplayerTimeLimit);
@@ -97,8 +107,25 @@ public class GameManager : MonoBehaviour
         StartGame(2, MultiplayerTimeLimit);
     }
 
+    public void TogglePause(bool isPaused)
+    {
+        _isPauseMenu = isPaused;
+
+        MenuUI.SetActive(isPaused);
+        ContinueButton.SetActive(isPaused);
+
+        CreditsMessage.SetActive(true);
+        MenuHeader.gameObject.SetActive(true);
+        GameOverMessage.SetActive(false);
+
+        IsGameRunning = !isPaused;
+        Time.timeScale = isPaused ? 0.0f : 1.0f;
+    }
+
     void StartGame(int playerCount, float limitInSeconds)
     {
+        _isPauseMenu = false;
+
         for (int i = 0; i < Players.Count; ++i)
         {
             Destroy(Players[i]);
@@ -149,6 +176,7 @@ public class GameManager : MonoBehaviour
         levelGenerator.StartGeneration(Players);
 
         MenuUI.SetActive(false);
+        CreditsMessage.SetActive(false);
         Time.timeScale = 1.0f;
     }
 
@@ -169,7 +197,9 @@ public class GameManager : MonoBehaviour
             IsGameRunning = false;
             Time.timeScale = 0.0f;
 
-            MenuHeader.text = "Game over";
+            MenuHeader.gameObject.SetActive(false);
+            GameOverMessage.SetActive(true);
+            CreditsMessage.SetActive(false);
             EndMessage.gameObject.SetActive(true);
             if (Players.Count == 1)
             {
@@ -180,11 +210,17 @@ public class GameManager : MonoBehaviour
                 float p1 = GetPlayerDistance(0);
                 float p2 = GetPlayerDistance(1);
 
-                string winPlayer = p1 > p2 ? "one" : "two";
-
-                EndMessage.text = $"Player {winPlayer} won!\n" +
-                    $"Player one fell {GetPlayerDistance(0):0.0} meters deep\n" +
-                    $"Player two fell {GetPlayerDistance(1):0.0} meters deep";
+                if (p1 == p2)
+                {
+                    EndMessage.text = "It's a tie!\n";
+                }
+                else
+                {
+                    string winPlayer = p1 > p2 ? "one" : "two";
+                    EndMessage.text = $"Player {winPlayer} won!\n";
+                }
+                EndMessage.text += $"Player one fell {GetPlayerDistance(0):0.0} meters deep\n" +
+                        $"Player two fell {GetPlayerDistance(1):0.0} meters deep";
             }
         }
     }
@@ -210,6 +246,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape) && (IsGameRunning || _isPauseMenu))
+        {
+            TogglePause(!_isPauseMenu);
+        }
+
         if (!IsGameRunning)
         {
             if (_countdownRemaining > 0)

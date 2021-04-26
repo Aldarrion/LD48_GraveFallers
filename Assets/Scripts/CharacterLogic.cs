@@ -143,11 +143,19 @@ public class CharacterLogic : MonoBehaviour
 
     private void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.E))
-        //{
-        //    _isInvlunerable = true;
-        //    _invulnerableTime = InvulnerableTime;
-        //}
+        var charComp = GetComponent<CharacterMovement>();
+        if (charComp)
+        {
+            float horizontal = charComp.MovementComponent.InputReader.GetHorizontal();
+            if (horizontal < 0)
+            {
+                CharacterSprite.GetComponent<SpriteRenderer>().flipX = true;
+            }
+            else if (horizontal > 0)
+            {
+                CharacterSprite.GetComponent<SpriteRenderer>().flipX = false;
+            }
+        }
 
         if (_isRespawning)
         {
