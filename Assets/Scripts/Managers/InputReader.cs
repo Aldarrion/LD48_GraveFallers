@@ -42,6 +42,11 @@ public class InputReader
         return (horizontalCount == 0 ? 0 : horizontalSum / horizontalCount);
     }
 
+    public float GetCurrentHorizontalInput()
+    {
+        return Input.GetAxis(_playerPrefix + "Horizontal");
+    }
+
     public void Reset()
     {
         activeActions.Clear();

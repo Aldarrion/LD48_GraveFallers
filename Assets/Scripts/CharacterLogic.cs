@@ -179,7 +179,7 @@ public class CharacterLogic : MonoBehaviour
         var charComp = GetComponent<CharacterMovement>();
         if (charComp)
         {
-            float horizontal = charComp.MovementComponent.InputReader.GetHorizontal();
+            float horizontal = charComp.MovementComponent.InputReader.GetCurrentHorizontalInput();
             if (horizontal < 0)
             {
                 CharacterSprite.GetComponent<SpriteRenderer>().flipX = true;
