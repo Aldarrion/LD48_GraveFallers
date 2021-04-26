@@ -35,29 +35,7 @@ public class LevelGenerator : MonoBehaviour
 
     public Vector3 GetRespawnPosition(GameObject player)
     {
-        Vector3 newPosition = new Vector3(player.transform.position.x, player.transform.position.y + 36 * 2, player.transform.position.z);
-
-        //Interval interval = intervals[player];
-
-        //int currentRow = PositionToRow(newPosition.y);
-
-        //if (interval.To > currentRow - RowsBellow)
-        //{
-        //    for (int i = interval.To - 1; i >= currentRow - RowsBellow; i--)
-        //    {
-        //        SpawnRow(i);
-        //    }
-        //    interval.To = currentRow - RowsBellow;
-        //}
-
-        //if (interval.From < currentRow + RowsAbove)
-        //{
-        //    for (int i = currentRow + RowsAbove; i > interval.From; i--)
-        //    {
-        //        SpawnRow(i);
-        //    }
-        //    interval.From = currentRow + RowsAbove;
-        //}
+        Vector3 newPosition = new Vector3(player.transform.position.x, Mathf.Min(player.transform.position.y + 36 * 2, 0), player.transform.position.z);
 
         return newPosition;
     }
