@@ -7,6 +7,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 679551720, guid: ffe8f1ad79175b94083fbf9b88975353, type: 3}
+      propertyPath: HitSounds.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 679551720, guid: ffe8f1ad79175b94083fbf9b88975353, type: 3}
+      propertyPath: HitSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a1fbc8357eef354f908e4fad77080a7, type: 3}
+    - target: {fileID: 679551720, guid: ffe8f1ad79175b94083fbf9b88975353, type: 3}
+      propertyPath: HitSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: a4b75a7a0b1ac7447ae00c48bf4258f7, type: 3}
+    - target: {fileID: 679551720, guid: ffe8f1ad79175b94083fbf9b88975353, type: 3}
+      propertyPath: HitSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: e84e4a0c4cab6ec48847c9cf254bbd8a, type: 3}
+    - target: {fileID: 679551720, guid: ffe8f1ad79175b94083fbf9b88975353, type: 3}
+      propertyPath: HitSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: a94df290a9bdcac4585189cfc4b9ee20, type: 3}
     - target: {fileID: 4353076629882426366, guid: ffe8f1ad79175b94083fbf9b88975353, type: 3}
       propertyPath: m_RootOrder
       value: 0

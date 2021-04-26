@@ -2,6 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public static class SoundUtil
+{
+    internal static void PlayRandomSound(IReadOnlyList<AudioClip> sounds, AudioSource source)
+    {
+        if (sounds.Count == 0)
+            return;
+
+        AudioClip sound = sounds[Random.Range(0, sounds.Count)];
+        source.clip = sound;
+        source.Play();
+    }
+}
+
 public class CharacterLogic : MonoBehaviour
 {
     public int MaxLives;
@@ -21,6 +34,13 @@ public class CharacterLogic : MonoBehaviour
     public float BlinkingRate;
 
     public GameObject HeartSpawner;
+
+    [Space]
+    public AudioClip[] LandingSounds;
+    public AudioClip[] HitSounds;
+    public AudioClip[] HealSounds;
+    public AudioClip[] LandingSoftSounds;
+
     public bool IsInvlunerable { get; private set; }
 
     private int _lifeCount;
@@ -32,6 +52,8 @@ public class CharacterLogic : MonoBehaviour
 
     private float _invulnerableTime;
     private float _invulnerableSign = 1;
+
+    AudioSource _audioSource;
 
     public int LifeCount
     {
@@ -87,6 +109,8 @@ public class CharacterLogic : MonoBehaviour
             Instantiate(HeartSpawner, transform.position, Quaternion.identity);
         }
         LifeCount = newLifeCount;
+
+        SoundUtil.PlayRandomSound(HitSounds, _audioSource);
     }
 
     public bool Heal(int count)
@@ -96,7 +120,8 @@ public class CharacterLogic : MonoBehaviour
             return false;
 
         LifeCount = newCount;
-        // TODO healing effects
+
+        SoundUtil.PlayRandomSound(HealSounds, _audioSource);
 
         return true;
     }
@@ -127,6 +152,12 @@ public class CharacterLogic : MonoBehaviour
                     Interpolate(ScreenShakeVelocityMin, ScreenShakeVelocityMax, velocity.y, ShakeIntensity)
                 );
             }
+
+            SoundUtil.PlayRandomSound(LandingSounds, _audioSource);
+        }
+        else if (velocity.y < -0.1f)
+        {
+            SoundUtil.PlayRandomSound(LandingSoftSounds, _audioSource);
         }
     }
 
@@ -139,6 +170,8 @@ public class CharacterLogic : MonoBehaviour
         var particleSystem = Trail.GetComponent<ParticleSystem>();
         particleSystem.startColor = GameManager.Instance.PlayerColors[PlayerId];
         Trail.GetComponent<SpriteRenderer>().color = GameManager.Instance.PlayerColors[PlayerId];
+
+        _audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
