@@ -10,8 +10,7 @@ public static class SoundUtil
             return;
 
         AudioClip sound = sounds[Random.Range(0, sounds.Count)];
-        source.clip = sound;
-        source.Play();
+        source.PlayOneShot(sound);
     }
 }
 

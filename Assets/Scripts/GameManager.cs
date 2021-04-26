@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour
 
     void StartGame(int playerCount, float limitInSeconds)
     {
+        EndMessage.gameObject.SetActive(false);
         Music.Stop();
         if (_isFirstTime)
         {
