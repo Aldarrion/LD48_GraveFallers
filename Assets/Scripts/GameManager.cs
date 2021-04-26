@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject CreditsMessage;
     public GameObject GameOverMessage;
     public GameObject ContinueButton;
+    public GameObject Hud;
 
     //-------------------------------
 
@@ -124,6 +125,7 @@ public class GameManager : MonoBehaviour
 
     void StartGame(int playerCount, float limitInSeconds)
     {
+        Hud.SetActive(true);
         _isPauseMenu = false;
 
         for (int i = 0; i < Players.Count; ++i)
@@ -255,7 +257,7 @@ public class GameManager : MonoBehaviour
         {
             if (_countdownRemaining > 0)
             {
-                // TODO process countdown
+                
             }
         }
         else
