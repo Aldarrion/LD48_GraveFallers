@@ -2478,6 +2478,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1263335596}
     - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
+      propertyPath: PlayerPrefab.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
+      propertyPath: PlayerPrefab.Array.data[0]
+      value: 
+      objectReference: {fileID: 6143393470019669791, guid: ffe8f1ad79175b94083fbf9b88975353, type: 3}
+    - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
+      propertyPath: PlayerPrefab.Array.data[1]
+      value: 
+      objectReference: {fileID: 8392017115469120154, guid: bbaacc9c5328987468171c3493d75964, type: 3}
+    - target: {fileID: 6661202349636921900, guid: d264aed65bb467c4cbe6362825482fee, type: 3}
       propertyPath: LifeContainers.Array.data[0]
       value: 
       objectReference: {fileID: 685293365}
