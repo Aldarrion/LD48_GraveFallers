@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour
     public GameObject[] LifeContainers;
 
     //-------------------------------
-    public readonly string[] PlayerPrefixes = new string[] { "", "P2_" };
+
+    public readonly string[] PlayerPrefixes = new string[] { "P1_", "P2_" };
     public List<GameObject> Players { get; private set; }
 
     public void SetLifeCount(int player, int count)
@@ -75,7 +76,7 @@ public class GameManager : MonoBehaviour
         {
             Players.Add(Instantiate(PlayerPrefab[i], Spawns[i].position, Quaternion.identity));
             Cameras[i].GetComponent<CameraController>().PlayerToFollow = Players[i].transform;
-            Players[i].GetComponent<CharacterMovement>().Prefix = PlayerPrefixes[i];
+            Players[i].GetComponent<CharacterMovement>().Prefix = playerCount == 1 ? "" : PlayerPrefixes[i];
             Players[i].GetComponent<CharacterLogic>().Init(i, StartLifeCount);
         }
 
