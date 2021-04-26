@@ -9711,7 +9711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ecfe57f9e9398e4c9282a193542002d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Distance: 5
+  Distance: 7
   TimeToActivate: 0.2
   TrailParticles: {fileID: 1685865032}
   ExplosionParticles: {fileID: 2077744631}

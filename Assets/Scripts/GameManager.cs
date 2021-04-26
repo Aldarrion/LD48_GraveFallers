@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public int SingleplayerTimeLimit;
     public int MultiplayerTimeLimit;
     public int Countdown;
+    public AudioSource Music;
 
     [Space]
     public Image SplitImage;
@@ -112,6 +113,11 @@ public class GameManager : MonoBehaviour
 
     public void TogglePause(bool isPaused)
     {
+        if (isPaused)
+            Music.Pause();
+        else
+            Music.UnPause();
+
         _isPauseMenu = isPaused;
 
         MenuUI.SetActive(isPaused);
@@ -127,6 +133,7 @@ public class GameManager : MonoBehaviour
 
     void StartGame(int playerCount, float limitInSeconds)
     {
+        Music.Stop();
         Hud.SetActive(true);
         _isPauseMenu = false;
 
@@ -273,6 +280,8 @@ public class GameManager : MonoBehaviour
             {
                 CountdownText.text = "GO!";
                 IsGameRunning = true;
+                Music.Play();
+                Music.volume = 0.5f;
             }
         }
         else
