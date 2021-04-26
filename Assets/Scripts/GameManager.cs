@@ -61,6 +61,7 @@ public class GameManager : MonoBehaviour
     private float _countdownRemaining;
     private List<GameObject> _itemsToDestroy = new List<GameObject>();
     private bool _isPauseMenu;
+    private bool _isFirstTime = true;
 
     //-------------------------------
     private void Awake()
@@ -134,6 +135,12 @@ public class GameManager : MonoBehaviour
     void StartGame(int playerCount, float limitInSeconds)
     {
         Music.Stop();
+        if (_isFirstTime)
+        {
+            _isFirstTime = false;
+            GetComponent<AudioSource>().Play();
+        }
+
         Hud.SetActive(true);
         _isPauseMenu = false;
 
@@ -213,7 +220,7 @@ public class GameManager : MonoBehaviour
             EndMessage.gameObject.SetActive(true);
             if (Players.Count == 1)
             {
-                EndMessage.text = $"Nice try!\nYou have fallen {GetPlayerDistance(0):0.0} meters deep";
+                EndMessage.text = $"Nice try!\nYou are {GetPlayerDistance(0):0.0} meters deep";
             }
             else
             {
@@ -229,8 +236,8 @@ public class GameManager : MonoBehaviour
                     string winPlayer = p1 > p2 ? "one" : "two";
                     EndMessage.text = $"Player {winPlayer} won!\n";
                 }
-                EndMessage.text += $"Player one fell {GetPlayerDistance(0):0.0} meters deep\n" +
-                        $"Player two fell {GetPlayerDistance(1):0.0} meters deep";
+                EndMessage.text += $"Player one is {GetPlayerDistance(0):0.0} meters deep\n" +
+                        $"Player two is {GetPlayerDistance(1):0.0} meters deep";
             }
         }
     }
