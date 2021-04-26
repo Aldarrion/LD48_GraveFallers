@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public Camera[] Cameras;
     public Transform[] Spawns;
     public int StartLifeCount;
+    public LevelGenerator LevelGenerator;
+    public Color[] PlayerColors;
 
     [Space]
     public Image SplitImage;
