@@ -8,8 +8,9 @@ public class LevelGenerator : MonoBehaviour
 
     public int RowSize = 1;
 
-    public int RowsAbove = 10;
-    public int RowsBellow = 30;
+    public const int RowsAbove = 100;
+    public const int RowsBellow = 30;
+    public const int FutureRowsKept = 200;
 
     public int RowDestructionRange = 10;
 
@@ -32,9 +33,33 @@ public class LevelGenerator : MonoBehaviour
         public int To;
     }
 
-    public Vector3 GetRespawnPosition(Vector3 playerPosition)
+    public Vector3 GetRespawnPosition(GameObject player)
     {
-        return new Vector3(playerPosition.x, playerPosition.y + 36 * 2, playerPosition.z);
+        Vector3 newPosition = new Vector3(player.transform.position.x, player.transform.position.y + 36 * 2, player.transform.position.z);
+
+        //Interval interval = intervals[player];
+
+        //int currentRow = PositionToRow(newPosition.y);
+
+        //if (interval.To > currentRow - RowsBellow)
+        //{
+        //    for (int i = interval.To - 1; i >= currentRow - RowsBellow; i--)
+        //    {
+        //        SpawnRow(i);
+        //    }
+        //    interval.To = currentRow - RowsBellow;
+        //}
+
+        //if (interval.From < currentRow + RowsAbove)
+        //{
+        //    for (int i = currentRow + RowsAbove; i > interval.From; i--)
+        //    {
+        //        SpawnRow(i);
+        //    }
+        //    interval.From = currentRow + RowsAbove;
+        //}
+
+        return newPosition;
     }
 
     public void Reset()
@@ -57,7 +82,6 @@ public class LevelGenerator : MonoBehaviour
 
     public void StartGeneration(IEnumerable<GameObject> players)
     {
-
 
         foreach (GameObject player in players)
         {
@@ -88,21 +112,68 @@ public class LevelGenerator : MonoBehaviour
             return;
         }
 
+        HashSet<int> rowsToDespawn = new HashSet<int>();
+
         foreach (GameObject characterController in intervals.Keys)
         {
             Interval interval = intervals[characterController];
 
             int currentRow = PositionToRow(characterController.transform.position.y);
 
+            // spawn
             if (interval.To > currentRow - RowsBellow)
             {
                 for (int i =interval.To - 1; i >= currentRow - RowsBellow; i--)
                 {
                     SpawnRow(i);
-                    interval.To = currentRow - RowsBellow;
                 }
+                interval.To = currentRow - RowsBellow;
+            }
+
+            if (interval.From < currentRow + RowsAbove)
+            {
+                for (int i = currentRow + RowsAbove; i > interval.From; i--)
+                {
+                    SpawnRow(i);
+                }
+                interval.From = currentRow + RowsAbove;
+            }
+
+            // despawn
+            if (interval.From > currentRow + RowsAbove)
+            {
+                for (int i = interval.From; i > currentRow + RowsAbove; i--)
+                {
+                    rowsToDespawn.Add(i);
+                }
+                interval.From = currentRow + RowsAbove;
             }
         }
+
+        foreach (int rowId in rowsToDespawn) 
+        {
+            DestroyRowIfNotNeeded(rowId);
+        }
+    }
+
+    void DestroyRowIfNotNeeded(int rowId)
+    {
+        foreach (Interval interval in intervals.Values)
+        {
+            if (interval.From >= rowId && interval.To <= rowId)
+            {
+                // we need this row
+                return;
+            }
+
+            if (interval.To > rowId && interval.To - FutureRowsKept <= rowId)
+            {
+                // this player will need the rows soon, keep them intact
+                return;
+            }
+        }
+
+        DestroyRow(rowId);
     }
 
     void SpawnRow(int rowId)
@@ -124,6 +195,12 @@ public class LevelGenerator : MonoBehaviour
     void GenerateRow(int rowId, List<GameObject> gameObjects)
     {
         //Debug.Log("Row " + rowId);
+
+        if (rowId >= 0)
+        {
+            return;
+        }
+
 
         System.Random random = new System.Random(rowId * 967);
 
@@ -264,6 +341,8 @@ public class LevelGenerator : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        rowObjects.Remove(rowId);
     }
 
 

@@ -67,7 +67,7 @@ public class CharacterLogic : MonoBehaviour
         if (newLifeCount < 0)
         {
             // Start respawn
-            _respawnPos = GameManager.Instance.LevelGenerator.GetRespawnPosition(transform.position);
+            _respawnPos = GameManager.Instance.LevelGenerator.GetRespawnPosition(this.gameObject);
             _respawnPos.z = transform.position.z;
             _timeToRespawn = Vector3.Distance(transform.position, _respawnPos) / RespawnSpeed;
             _respawnDir = (_respawnPos - transform.position).normalized;
