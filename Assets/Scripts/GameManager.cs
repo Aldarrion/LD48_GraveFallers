@@ -8,10 +8,12 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     //-------------------------------
-    public GameObject PlayerPrefab;
+    public GameObject[] PlayerPrefab;
     public Camera[] Cameras;
     public Transform[] Spawns;
     public int StartLifeCount;
+    public LevelGenerator LevelGenerator;
+    public Color[] PlayerColors;
 
     [Space]
     public Image SplitImage;
@@ -71,7 +73,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < playerCount; ++i)
         {
-            Players.Add(Instantiate(PlayerPrefab, Spawns[i].position, Quaternion.identity));
+            Players.Add(Instantiate(PlayerPrefab[i], Spawns[i].position, Quaternion.identity));
             Cameras[i].GetComponent<CameraController>().PlayerToFollow = Players[i].transform;
             Players[i].GetComponent<CharacterMovement>().Prefix = PlayerPrefixes[i];
             Players[i].GetComponent<CharacterLogic>().Init(i, StartLifeCount);

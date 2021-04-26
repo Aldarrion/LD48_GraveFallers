@@ -61,7 +61,11 @@ public class Projectile : MonoBehaviour
 
         if (other.CompareTag("PlayerHitbox"))
         {
-            other.GetComponent<CharacterHitbox>().CharacterLogic.TakeDamage(1);
+            var logic = other.GetComponent<CharacterHitbox>().CharacterLogic;
+            if (logic.IsInvlunerable)
+                return;
+
+            logic.TakeDamage(1);
         }
 
         Disintegrate();

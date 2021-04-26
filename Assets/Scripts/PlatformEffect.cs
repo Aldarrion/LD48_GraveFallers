@@ -37,6 +37,9 @@ public class PlatformEffect : MonoBehaviour
         {
             case PlatformType.Thorny:
             {
+                if (character.IsInvlunerable)
+                    return;
+
                 active_ = false;
                 character.TakeDamage(1);
                 GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);

@@ -51,6 +51,17 @@ public class CharacterMovement : MonoBehaviour
         transform.position = new Vector3(Mathf.Max(Mathf.Min(transform.position.x, 6), -6), transform.position.y, transform.position.z);
     }
 
+    private void OnDisable()
+    {
+        if (MovementComponent != null)
+            MovementComponent.Disable();
+    }
+
+    private void OnEnable()
+    {
+        if (MovementComponent != null)
+            MovementComponent.Enable();
+    }
 
     void FixedUpdate()
     {
