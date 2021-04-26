@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public int StartLifeCount;
     public LevelGenerator LevelGenerator;
     public Color[] PlayerColors;
+    public int SingleplayerTimeLimit;
+    public int MultiplayerTimeLimit;
+    public int Countdown;
 
     [Space]
     public Image SplitImage;
@@ -21,11 +24,16 @@ public class GameManager : MonoBehaviour
     public Text[] Distance;
     public Text TimeRemaining;
     public GameObject[] LifeContainers;
+    public GameObject MenuUI;
+    public Text MenuHeader;
+    public Text EndMessage;
 
     //-------------------------------
 
     public readonly string[] PlayerPrefixes = new string[] { "P1_", "P2_" };
     public List<GameObject> Players { get; private set; }
+
+    public bool IsGameRunning { get; private set; }
 
     public void SetLifeCount(int player, int count)
     {
@@ -35,11 +43,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void OnItemSpawned(GameObject item)
+    {
+        _itemsToDestroy.Add(item);
+    }
+
     //-------------------------------
     // Private
     //-------------------------------
     private float _timeLimit;
-    private bool _isGameRunning;
+    private float _countdownRemaining;
+    private List<GameObject> _itemsToDestroy = new List<GameObject>();
 
     //-------------------------------
     private void Awake()
@@ -61,12 +75,42 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         // TODO this will be from UI action, not from Start()
-        StartGame(2, 60);
+        //StartGame(2, 60);
+    }
+
+    public void QuitGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+
+    public void StartSingleplayer()
+    {
+        StartGame(1, SingleplayerTimeLimit);
+    }
+
+    public void StartMultiplayer()
+    {
+        StartGame(2, MultiplayerTimeLimit);
     }
 
     void StartGame(int playerCount, float limitInSeconds)
     {
+        for (int i = 0; i < Players.Count; ++i)
+        {
+            Destroy(Players[i]);
+        }
         Players.Clear();
+
+        for (int i = 0; i < _itemsToDestroy.Count; ++i)
+        {
+            Destroy(_itemsToDestroy[i]);
+        }
+        _itemsToDestroy.Clear();
+
         for (int i = 0; i < Cameras.Length; ++i)
         {
             Cameras[i].gameObject.SetActive(i < playerCount);
@@ -96,12 +140,16 @@ public class GameManager : MonoBehaviour
 
         _timeLimit = limitInSeconds;
 
-        _isGameRunning = true;
-        // TODO init countdown 3, 2, 1, GO!
+        IsGameRunning = true;
+        _countdownRemaining = Countdown;
 
         LevelGenerator levelGenerator = FindObjectOfType<LevelGenerator>();
 
+        LevelGenerator.Reset();
         levelGenerator.StartGeneration(Players);
+
+        MenuUI.SetActive(false);
+        Time.timeScale = 1.0f;
     }
 
     void UpdateTime()
@@ -113,23 +161,66 @@ public class GameManager : MonoBehaviour
         int seconds = (int)(_timeLimit % 60);
 
         TimeRemaining.text = $"{minutes}:{seconds:00}";
+
+        // Game over
+        if (_timeLimit == 0)
+        {
+            MenuUI.SetActive(true);
+            IsGameRunning = false;
+            Time.timeScale = 0.0f;
+
+            MenuHeader.text = "Game over";
+            EndMessage.gameObject.SetActive(true);
+            if (Players.Count == 1)
+            {
+                EndMessage.text = $"Nice try!\nYou have fallen {GetPlayerDistance(0):0.0} meters deep";
+            }
+            else
+            {
+                float p1 = GetPlayerDistance(0);
+                float p2 = GetPlayerDistance(1);
+
+                string winPlayer = p1 > p2 ? "one" : "two";
+
+                EndMessage.text = $"Player {winPlayer} won!\n" +
+                    $"Player one fell {GetPlayerDistance(0):0.0} meters deep\n" +
+                    $"Player two fell {GetPlayerDistance(1):0.0} meters deep";
+            }
+        }
     }
 
     void UpdateDistance()
     {
         for (int i = 0; i < Players.Count; ++i)
         {
-            float dist = Mathf.Max(0, -Players[i].transform.position.y);
-            Distance[i].text = $"{dist:0.0}m";
+            Distance[i].text = GetPlayerDistanceString(i);
         }
+    }
+
+    float GetPlayerDistance(int player)
+    {
+        return Mathf.Max(0, -Players[player].transform.position.y);
+    }
+
+    string GetPlayerDistanceString(int player)
+    {
+        float dist = GetPlayerDistance(player);
+        return $"{dist:0.0}m";
     }
 
     private void Update()
     {
-        if (!_isGameRunning)
-            return;
-
-        UpdateDistance();
-        UpdateTime();
+        if (!IsGameRunning)
+        {
+            if (_countdownRemaining > 0)
+            {
+                // TODO process countdown
+            }
+        }
+        else
+        {
+            UpdateDistance();
+            UpdateTime();
+        }
     }
 }

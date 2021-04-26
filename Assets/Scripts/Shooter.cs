@@ -58,6 +58,7 @@ public class Shooter : MonoBehaviour
     private void SpawnProjectile(Vector3 offset)
     {
         GameObject projectileObject = Instantiate(Projectile, ProjectileSpawnPoint.position + offset, Quaternion.identity);
+        GameManager.Instance.OnItemSpawned(projectileObject);
 
         var projectile = projectileObject.GetComponent<Projectile>();
         projectile.transform.eulerAngles = new Vector3(0, 0, GetRotation());

@@ -33,7 +33,8 @@ public class HeartSpawner : MonoBehaviour
             TrailParticles.Stop();
             ExplosionParticles.Play();
 
-            Instantiate(HeartPrefab, transform.position, Quaternion.identity);
+            var item = Instantiate(HeartPrefab, transform.position, Quaternion.identity);
+            GameManager.Instance.OnItemSpawned(item);
         }
         else if (!ExplosionParticles.isPlaying)
         {

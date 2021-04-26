@@ -26,6 +26,9 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.Instance.IsGameRunning)
+            return;
+
         Vector3 offset = Vector3.zero;
         if (_shakeTime > 0)
         {
