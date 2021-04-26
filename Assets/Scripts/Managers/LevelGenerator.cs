@@ -184,7 +184,7 @@ public class LevelGenerator : MonoBehaviour
         SpawnObject(Block, -(GameConsts.ROW_SIZE + 1), rowId, gameObjects);
         SpawnObject(Block, GameConsts.ROW_SIZE + 1, rowId, gameObjects);
 
-        if (rowId >= 0)
+        if (rowId >= -3)
         {
             return;
         }
